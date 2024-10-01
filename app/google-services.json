@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "357291087262",
+    "project_id": "solar-control-app",
+    "storage_bucket": "solar-control-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:357291087262:android:4bba676a2c00129ce5728f",
+        "android_client_info": {
+          "package_name": "com.example.solar_bottom_view_navigation"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4kaRl-UlRS_bI6ZPX__bvpZqnWR7JT14"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
