@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("com.android.application")
+    //id("com.android.application")
     // Add the Google services Gradle plugin
     id("com.google.gms.google-services")
 }
@@ -50,10 +50,11 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.firebase.firestore.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.androidx.test.espresso.idling.concurrent)
+    //androidTestImplementation(libs.androidx.test.espresso.idling.concurrent)
     // Import the Firebase BoM
 
     implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
@@ -65,4 +66,12 @@ dependencies {
 
     // https://firebase.google.com/docs/android/setup#available-libraries
 
+    // Import the BoM for the Firebase platform
+    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+
+    // Add the dependency for the Realtime Database library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-database")
+	// other dependencies...
+    
 }

@@ -1,14 +1,19 @@
 package com.example.solar_bottom_view_navigation
-
-import android.os.Bundle
+/*
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.solar_bottom_view_navigation.databinding.ActivityMainBinding
+*/
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+//Firebase firestore
+import android.util.Log
+import com.google.firebase.firestore.FirebaseFirestore
 
+/*
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -35,4 +40,65 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
+    fun basicReadWrite() {
+        // [START write_message]
+        // Write a message to the database
+        val database = Firebase.database
+        val myRef = database.getReference("message")
+
+        myRef.setValue("Hello, World!")
+        // [END write_message]
+
+        // [START read_message]
+        // Read from the database
+        myRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                val value = dataSnapshot.getValue<String>()
+                Log.d(TAG, "Value is: $value")
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
+        // [END read_message]
+    }
+} */
+
+class MainActivity : AppCompatActivity() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        // Initialize Firestore
+        val db = FirebaseFirestore.getInstance()
+
+        // Reference to the 'user1' document in the 'users' collection
+        val userRef = db.collection("users").document("user1")
+
+        // Retrieve the document
+        userRef.get()
+            .addOnSuccessListener { document ->
+                if (document != null && document.exists()) {
+                    // Convert document to a User object (this assumes an appropriate data class)
+                    val user = document.toObject(User::class.java)
+                    Log.d("MainActivity", "User name: ${user?.name}, age: ${user?.age}")
+
+                } else {
+                    Log.d("MainActivity", "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d("MainActivity", "get failed with ", exception)
+            }
+    }
 }
+
+data class User(
+    var name: String? = null,
+    var age: Int? = null
+)
