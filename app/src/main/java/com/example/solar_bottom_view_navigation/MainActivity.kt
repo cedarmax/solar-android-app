@@ -11,6 +11,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 //Firebase firestore
 import android.util.Log
+import android.widget.TextView
 import com.google.firebase.firestore.FirebaseFirestore
 
 /*
@@ -80,6 +81,8 @@ class MainActivity : AppCompatActivity() {
         // Reference to the 'user1' document in the 'users' collection
         val userRef = db.collection("users").document("user1")
 
+
+
         // Retrieve the document
         userRef.get()
             .addOnSuccessListener { document ->
@@ -87,7 +90,8 @@ class MainActivity : AppCompatActivity() {
                     // Convert document to a User object (this assumes an appropriate data class)
                     val user = document.toObject(User::class.java)
                     Log.d("MainActivity", "User name: ${user?.name}, age: ${user?.age}")
-
+                    val textView: TextView = findViewById(R.id.textFirebase) as TextView
+                        textView.text = user?.name
                 } else {
                     Log.d("MainActivity", "No such document")
                 }
