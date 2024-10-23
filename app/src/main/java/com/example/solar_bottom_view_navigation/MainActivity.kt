@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         val db = FirebaseFirestore.getInstance()
 
         // Reference to the 'user1' document in the 'users' collection
-        val userRef = db.collection("users").document("user1")
+        val userRef = db.collection("test").document("test")
 
 
 
@@ -89,9 +89,13 @@ class MainActivity : AppCompatActivity() {
                 if (document != null && document.exists()) {
                     // Convert document to a User object (this assumes an appropriate data class)
                     val user = document.toObject(User::class.java)
-                    Log.d("MainActivity", "User name: ${user?.name}, age: ${user?.age}")
-                    val textView: TextView = findViewById(R.id.textFirebase) as TextView
-                        textView.text = user?.name
+                    Log.d("MainActivity", "User name: ${user?.battery}, age: ${user?.panel}")
+                    val batteryString = user?.battery.toString()
+                    val panelString = user?.panel.toString()
+                    val textView: TextView = findViewById(R.id.textBatteryVoltage) as TextView
+                        textView.text = batteryString
+                    val textView1: TextView = findViewById(R.id.textPanelVoltage) as TextView
+                        textView1.text = panelString
                 } else {
                     Log.d("MainActivity", "No such document")
                 }
@@ -103,6 +107,6 @@ class MainActivity : AppCompatActivity() {
 }
 
 data class User(
-    var name: String? = null,
-    var age: Int? = null
+    var battery: Int? = null,
+    var panel: Int? = null
 )
