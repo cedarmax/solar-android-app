@@ -1,18 +1,21 @@
 package com.example.solar_bottom_view_navigation
-/*
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.solar_bottom_view_navigation.databinding.ActivityMainBinding
-*/
+
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 //Firebase firestore
 import android.util.Log
 import android.widget.TextView
 import com.google.firebase.firestore.FirebaseFirestore
+//Login fragment
+import androidx.fragment.app.Fragment
+import com.example.app.ui.LoginFragment
 
 /*
 class MainActivity : AppCompatActivity() {
@@ -74,14 +77,31 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        // Load LoginFragment if this is the first time launching
+        if (savedInstanceState == null) {
+            loadFragment(LoginFragment())
+        }
+        // Function to replace the current fragment
 
+        val usernameInput = findViewById<EditText>(R.id.usernameInput)
+        val passwordInput = findViewById<EditText>(R.id.passwordInput)
+        val loginButton = findViewById<Button>(R.id.loginButton)
+        loginButton.setOnClickListener {
+            val username = usernameInput.text.toString()
+            val password = passwordInput.text.toString()
+
+            if (username == "admin" && password == "password") {
+                val intent = Intent(this, MenuActivity::class.java)
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
+            }
+        }
         // Initialize Firestore
         val db = FirebaseFirestore.getInstance()
 
         // Reference to the 'user1' document in the 'users' collection
         val userRef = db.collection("test").document("test")
-
-
 
         // Retrieve the document
         userRef.get()
@@ -104,7 +124,14 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", "get failed with ", exception)
             }
     }
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .commit()
+    }
 }
+
+
 
 data class User(
     var battery: Int? = null,
