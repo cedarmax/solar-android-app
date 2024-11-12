@@ -3,13 +3,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
     android:padding="16dp">
 
     <TextView
-        android:id="@+id/statsTextView"
+        android:id="@+id/batteryVoltageTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Power Statistics will be displayed here" />
+        android:text="Battery Voltage: -- V"
+        android:textSize="18sp"
+        android:paddingBottom="8dp" />
 
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/batteryVoltageChart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <TextView
+        android:id="@+id/solarCurrentTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Solar Panel Current: -- A"
+        android:textSize="18sp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp" />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/solarCurrentChart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
 </LinearLayout>

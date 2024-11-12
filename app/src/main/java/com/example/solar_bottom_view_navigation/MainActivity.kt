@@ -1,5 +1,6 @@
 package com.example.solar_bottom_view_navigation
 
+import android.content.Intent
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,7 +12,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 //Firebase firestore
 import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 //Login fragment
 import androidx.fragment.app.Fragment
@@ -91,7 +95,7 @@ class MainActivity : AppCompatActivity() {
             val password = passwordInput.text.toString()
 
             if (username == "admin" && password == "password") {
-                val intent = Intent(this, MenuActivity::class.java)
+                val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()

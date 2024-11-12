@@ -1,22 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.DashboardFragment">
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:gravity="center">
 
-    <TextView
-        android:id="@+id/text_dashboard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Light Bulb and Switch 1 Pair -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:padding="16dp">
+
+        <!-- Light Bulb 1 -->
+        <ImageView
+            android:id="@+id/lightBulb1"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/bulb_off"
+            android:contentDescription="Light bulb 1"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
+
+        <!-- Switch 1 -->
+        <ImageView
+            android:id="@+id/switch1"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/switch_off"
+            android:contentDescription="Light switch 1"
+            android:layout_marginTop="16dp" />
+
+        <!-- Textbox 1 -->
+        <TextView
+            android:id="@+id/textbox1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Indoors"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:gravity="center" />
+    </LinearLayout>
+
+    <!-- Light Bulb and Switch 2 Pair -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:padding="16dp">
+
+        <!-- Light Bulb 2 -->
+        <ImageView
+            android:id="@+id/lightBulb2"
+            android:layout_width="150dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:src="@drawable/bulb_off"
+            android:contentDescription="Light bulb 2"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter" />
+
+        <!-- Switch 2 -->
+        <ImageView
+            android:id="@+id/switch2"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:src="@drawable/switch_off"
+            android:contentDescription="Light switch 2"
+            android:layout_marginTop="16dp" />
+
+        <!-- Textbox 2 -->
+        <TextView
+            android:id="@+id/textbox2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Outdoors"
+            android:textSize="16sp"
+            android:textAlignment="center"
+            android:gravity="center" />
+    </LinearLayout>
+
+</LinearLayout>
