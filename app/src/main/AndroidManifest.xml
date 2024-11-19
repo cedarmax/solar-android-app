@@ -18,20 +18,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Solar_Bottom_View_Navigation"
         tools:targetApi="31">
-        <activity android:name=".PowerStatisticsActivity" />
-        <activity android:name=".MenuActivity" />
-        <activity android:name=".MainActivity">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
         </activity>
     </application>
 
