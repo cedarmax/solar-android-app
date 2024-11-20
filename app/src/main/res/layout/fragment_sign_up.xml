@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".ForgotPasswordActivity">
+    tools:context=".SignUpActivity">
 
     <LinearLayout
         android:id="@+id/centeredLayout"
@@ -20,35 +20,59 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
-            android:id="@+id/tvForgotPasswordTitle"
+            android:id="@+id/tvSignUpTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Forgot your Password?"
+            android:text="Sign Up"
             android:textSize="24sp"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginBottom="16dp" />
 
         <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Full Name"
+            android:inputType="textPersonName"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter your email address"
+            android:hint="Email Address"
             android:inputType="textEmailAddress"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:layout_marginBottom="12dp" />
+
+        <EditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm Password"
+            android:inputType="textPassword"
             android:layout_marginBottom="16dp" />
 
         <Button
-            android:id="@+id/btnSendLink"
+            android:id="@+id/btnSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Send Reset Link"
+            android:text="Sign Up"
             android:layout_marginBottom="16dp" />
 
         <TextView
-            android:id="@+id/tvBackToLogin"
+            android:id="@+id/tvAlreadyHaveAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Back to Login"
+            android:text="Already have an account? Login"
             android:textColor="@color/teal_700"
             android:clickable="true"
             android:focusable="true" />

@@ -13,6 +13,20 @@
         android:id="@+id/fragment_container">
     </FrameLayout>
 
+    <!-- Title Text -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome to the Automatic Solar Lighting System!"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="32dp" />
+
     <!-- App Logo -->
     <ImageView
         android:id="@+id/logoImageView"
@@ -21,6 +35,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="32dp"
         android:contentDescription="App Logo"
+        android:layout_below="@id/titleTextView"
         tools:srcCompat="@drawable/sun" />
 
     <!-- Username/Email Input -->

@@ -1,12 +1,6 @@
 package com.example.solar_bottom_view_navigation
 
 import android.content.Intent
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.example.solar_bottom_view_navigation.databinding.ActivityMainBinding
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -16,10 +10,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import com.example.app.ui.LoginFragment
 import com.google.firebase.firestore.FirebaseFirestore
 //Login fragment
-import androidx.fragment.app.Fragment
-import com.example.app.ui.LoginFragment
 
 /*
 class MainActivity : AppCompatActivity() {
@@ -128,7 +121,8 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", "get failed with ", exception)
             }
     }
-    private fun loadFragment(fragment: Fragment) {
+
+    private fun loadFragment(fragment: LoginFragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()

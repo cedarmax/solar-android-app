@@ -2,7 +2,8 @@ package com.example.solar_bottom_view_navigation.ui
 
     import android.os.Bundle
     import androidx.appcompat.app.AppCompatActivity
-    import com.example.solar_bottom_view_navigation.ui.databinding.ActivityStatisticsBinding
+    import com.example.solar_bottom_view_navigation.R
+    import com.example.solar_bottom_view_navigation.databinding.ActivityStatisticsBinding
     import com.github.mikephil.charting.charts.LineChart
     import com.github.mikephil.charting.data.Entry
     import com.github.mikephil.charting.data.LineData

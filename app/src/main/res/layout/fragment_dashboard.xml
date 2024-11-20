@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:padding="16dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#000000">
 
     <!-- Light Bulb and Switch 1 Pair -->
     <LinearLayout
@@ -19,13 +20,13 @@
         <!-- Light Bulb 1 -->
         <ImageView
             android:id="@+id/lightBulb1"
-            android:layout_width="150dp"
-            android:layout_height="0dp"
+            android:layout_width="153dp"
+            android:layout_height="415dp"
             android:layout_weight="1"
-            android:src="@drawable/bulb_off"
-            android:contentDescription="Light bulb 1"
             android:adjustViewBounds="true"
-            android:scaleType="fitCenter" />
+            android:contentDescription="Light bulb 1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/bulb_off" />
 
         <!-- Switch 1 -->
         <ImageView
@@ -45,7 +46,8 @@
             android:text="Indoors"
             android:textSize="16sp"
             android:textAlignment="center"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
     <!-- Light Bulb and Switch 2 Pair -->
@@ -86,7 +88,8 @@
             android:text="Outdoors"
             android:textSize="16sp"
             android:textAlignment="center"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="#FFFFFF" />
     </LinearLayout>
 
 </LinearLayout>
