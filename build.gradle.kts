@@ -11,10 +11,18 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+
     }
     dependencies {
         classpath("com.android.tools.build:gradle:8.0.2") // Or your current version)
         classpath("com.google.gms:google-services:4.3.15") // Check for the latest version
 
+    }
+}
+allprojects {
+    repositories{
+        maven {
+            url = uri ("https://jitpack.io")
+        }
     }
 }
