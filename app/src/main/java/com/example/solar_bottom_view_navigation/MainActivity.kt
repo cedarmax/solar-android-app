@@ -135,8 +135,6 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-
-
 data class User(
     var battery: Int? = null,
     var panel: Int? = null
