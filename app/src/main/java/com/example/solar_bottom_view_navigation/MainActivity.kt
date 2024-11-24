@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
-import com.example.app.ui.LoginFragment
+import com.example.solar_bottom_view_navigation.ui.LoginFragment
 import com.google.firebase.firestore.FirebaseFirestore
 //Login fragment
 

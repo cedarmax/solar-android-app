@@ -1,4 +1,4 @@
-package com.example.solar_bottom_view_navigation
+package com.example.solar_bottom_view_navigation.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,9 +7,10 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.example.app.ui.LoginFragment
+import com.example.solar_bottom_view_navigation.R
+import com.example.solar_bottom_view_navigation.ui.login.LoginFragment
 
-class ForgotPasswordActivity : AppCompatActivity() {
+class ForgotPasswordFragment : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

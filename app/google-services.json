@@ -1,8 +1,9 @@
 {
   "project_info": {
     "project_number": "357291087262",
+    "firebase_url": "https://solar-control-app-default-rtdb.firebaseio.com",
     "project_id": "solar-control-app",
-    "storage_bucket": "solar-control-app.appspot.com"
+    "storage_bucket": "solar-control-app.firebasestorage.app"
   },
   "client": [
     {
@@ -12,7 +13,20 @@
           "package_name": "com.example.solar_bottom_view_navigation"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "357291087262-r1sufohvcoc6n9rm2jr2p21pqce9h41j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.solar_bottom_view_navigation",
+            "certificate_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+          }
+        },
+        {
+          "client_id": "357291087262-h213t823gmqlfni9mq672oo20n87mb0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC4kaRl-UlRS_bI6ZPX__bvpZqnWR7JT14"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "357291087262-h213t823gmqlfni9mq672oo20n87mb0h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

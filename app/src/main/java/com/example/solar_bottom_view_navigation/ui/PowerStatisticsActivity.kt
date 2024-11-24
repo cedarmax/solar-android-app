@@ -1,10 +1,11 @@
-package com.example.solar_bottom_view_navigation
+package com.example.solar_bottom_view_navigation.ui
 
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.example.solar_bottom_view_navigation.R
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
