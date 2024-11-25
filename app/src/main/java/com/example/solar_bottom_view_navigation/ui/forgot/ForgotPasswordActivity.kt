@@ -1,4 +1,4 @@
-package com.example.solar_bottom_view_navigation.ui
+package com.example.solar_bottom_view_navigation.ui.forgot
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,11 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.solar_bottom_view_navigation.R
 import com.example.solar_bottom_view_navigation.ui.login.LoginFragment
 
-class ForgotPasswordFragment : AppCompatActivity() {
+class ForgotPasswordActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_forgotpassword)
+        setContentView(R.layout.fragment_forgot_password)
 
         val emailEditText: EditText = findViewById(R.id.etEmail)
         val sendLinkButton: Button = findViewById(R.id.btnSendLink)
