@@ -4,81 +4,55 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController // For navigation
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.example.solar_bottom_view_navigation.R
-import com.google.firebase.auth.FirebaseAuth
 
 class SignUpFragment : Fragment() {
 
-    private lateinit var auth: FirebaseAuth
+    private val signUpViewModel: SignUpViewModel by viewModels()
+
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText
-    private lateinit var loginButton: Button
-    private lateinit var signupTextView: TextView
-    private lateinit var forgotPasswordTextView: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
+        val view = inflater.inflate(R.layout.fragment_sign_up, container, false)
 
-        // Initialize Firebase Auth
-        auth = FirebaseAuth.getInstance()
-
-        // Initialize UI components
         emailEditText = view.findViewById(R.id.emailEditText)
         passwordEditText = view.findViewById(R.id.passwordEditText)
-        loginButton = view.findViewById(R.id.loginButton)
-        signupTextView = view.findViewById(R.id.signupTextView)
-        forgotPasswordTextView = view.findViewById(R.id.forgotPasswordTextView)
 
-        // Set up Login Button
-        loginButton.setOnClickListener {
+        val signUpButton = view.findViewById<View>(R.id.signUpButton)
+        signUpButton.setOnClickListener {
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
-
-            if (email.isNotEmpty() && password.isNotEmpty()) {
-                signInWithEmailAndPassword(email, password)
-            } else {
-                Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT).show()
-            }
+            signUpViewModel.signUp(email, password)
         }
 
-        // Set up Sign-Up Text
-        signupTextView.setOnClickListener {
-            navigateToSignUp()
-        }
-
-        // Set up Forgot Password Text
-        forgotPasswordTextView.setOnClickListener {
-            navigateToForgotPassword()
-        }
+        observeViewModel()
 
         return view
     }
 
-    private fun signInWithEmailAndPassword(email: String, password: String) {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(requireActivity()) { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(requireContext(), "Login Successful!", Toast.LENGTH_SHORT).show()
-                    // Navigate to the main screen
-                } else {
-                    Toast.makeText(requireContext(), "Login Failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                }
+    private fun observeViewModel() {
+        signUpViewModel.signUpStatus.observe(viewLifecycleOwner, Observer { isSuccess ->
+            if (isSuccess) {
+                Toast.makeText(requireContext(), "Sign-Up Successful!", Toast.LENGTH_SHORT).show()
+                // Navigate to Login Fragment
+            } else {
+                Toast.makeText(requireContext(), "Sign-Up Failed", Toast.LENGTH_SHORT).show()
             }
-    }
+        })
 
-    private fun navigateToSignUp() {
-        // Navigate to the Sign-Up Fragment
-        findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
-    }
-
-    private fun navigateToForgotPassword() {
-        // Navigate to the Forgot Password Fragment
-        findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+        signUpViewModel.errorMessage.observe(viewLifecycleOwner, Observer { message ->
+            if (!message.isNullOrEmpty()) {
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

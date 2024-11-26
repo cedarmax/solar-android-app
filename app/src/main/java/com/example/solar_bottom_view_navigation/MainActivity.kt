@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
             loadFragment(LoginFragment())
         }
         // Function to replace the current fragment
-
+        /*
         val usernameInput = findViewById<EditText>(R.id.usernameInput)
         val passwordInput = findViewById<EditText>(R.id.passwordInput)
         val loginButton = findViewById<Button>(R.id.loginButton)
@@ -66,7 +66,8 @@ class MainActivity : AppCompatActivity() {
                 Log.d("MainActivity", "get failed with ", exception)
             }
     }
-
+*/
+    }
     private fun loadFragment(fragment: LoginFragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)

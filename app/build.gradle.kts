@@ -76,6 +76,9 @@ dependencies {
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation("com.google.firebase:firebase-database")
 	// other dependencies...
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4") // Use the latest stable version
 
-    
+
+
+
 }
