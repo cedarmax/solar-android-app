@@ -14,6 +14,7 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.text.SimpleDateFormat
 import java.util.*
@@ -25,6 +26,7 @@ class NotificationsFragment : Fragment() {
     private lateinit var solarCurrentChart: LineChart
     private lateinit var batteryWattageChart: LineChart
     private lateinit var database: FirebaseDatabase
+    private val auth = FirebaseAuth.getInstance() // Initialize FirebaseAuth
 
     private val batteryPercentageEntries = mutableListOf<Entry>()
     private val solarCurrentEntries = mutableListOf<Entry>()
@@ -123,8 +125,19 @@ class NotificationsFragment : Fragment() {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
         val formattedTime = dateFormat.format(Date(timestamp))
 
-        // Create a reference in Firebase Realtime Database
-        val dataRef = database.reference.child("powerStatistics").child(formattedTime)
+        // Get the current user’s UID
+        val userId = auth.currentUser?.uid
+        if (userId == null) {
+            Log.e("Firebase", "User not logged in")
+            return
+        }
+
+        // Create a reference in Firebase Realtime Database under users/{userId}/powerStatistics
+        val dataRef = database.reference
+            .child("users")
+            .child(userId)
+            .child("powerStatistics")
+            .child(formattedTime)
 
         // Data object
         val data = mapOf(

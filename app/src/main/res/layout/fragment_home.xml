@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:text="Welcome, User!"
         android:textSize="18sp"
-        android:textColor="@android:color/black"
+        android:textColor="@android:color/white"
         android:layout_marginBottom="20dp"
         android:gravity="center"/>
 
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:text="Log Out"
         android:textColor="@android:color/white"
-        android:backgroundTint="@color/purple_500"
+        android:backgroundTint="@color/yellow"
         android:padding="12dp"/>
 
 </LinearLayout>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    android:background="@color/white"
+    android:background="@color/baby_blue"
     tools:context=".SignUpActivity">
 
     <!-- Title -->
@@ -17,7 +17,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"
-        android:textColor="@color/grey"
+        android:textColor="@color/white"
         android:layout_marginBottom="16dp"
         android:layout_alignParentTop="true"
         android:layout_marginTop="32dp" />
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Email"
-        android:textColorHint="@color/grey"
+        android:textColorHint="@color/white"
         android:inputType="textEmailAddress"
         android:layout_below="@id/titleTextView"
         android:layout_marginTop="16dp" />
@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Password"
-        android:textColorHint="@color/grey"
+        android:textColorHint="@color/white"
         android:inputType="textPassword"
         android:layout_below="@id/emailEditText"
         android:layout_marginTop="8dp" />
@@ -51,6 +51,7 @@
         android:layout_height="wrap_content"
         android:text="Sign Up"
         android:layout_below="@id/passwordEditText"
+        android:backgroundTint="@color/green_200"
         android:layout_marginTop="16dp" />
 
     <!-- Already Have Account Text -->
