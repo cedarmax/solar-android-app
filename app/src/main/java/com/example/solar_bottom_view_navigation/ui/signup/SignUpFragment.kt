@@ -4,12 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.solar_bottom_view_navigation.R
+import androidx.navigation.fragment.findNavController
 
 class SignUpFragment : Fragment() {
 
@@ -32,6 +35,11 @@ class SignUpFragment : Fragment() {
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
             signUpViewModel.signUp(email, password)
+        }
+        // Navigate back to LoginFragment
+        val backToLoginButton: TextView = view.findViewById(R.id.tvAlreadyHaveAccount)
+        backToLoginButton.setOnClickListener {
+            findNavController().navigate(R.id.action_signupFragment_to_loginFragment)
         }
 
         observeViewModel()

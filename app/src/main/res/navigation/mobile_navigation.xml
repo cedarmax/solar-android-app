@@ -22,19 +22,29 @@
         android:name="com.example.solar_bottom_view_navigation.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+
     <!-- Sign-Up Fragment -->
     <fragment
         android:id="@+id/signupFragment"
         android:name="com.example.solar_bottom_view_navigation.ui.signup.SignUpFragment"
         android:label="Sign Up"
-        tools:layout="@layout/fragment_sign_up" />
+        tools:layout="@layout/fragment_sign_up">
+      <action
+            android:id="@+id/action_signupFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
     <!-- Forgot Password Fragment -->
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.solar_bottom_view_navigation.ui.forgot.ForgotPasswordFragment"
         android:label="Forgot Password"
-        tools:layout="@layout/fragment_forgot_password" />
+        tools:layout="@layout/fragment_forgot_password">
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
     <!-- Login Fragment -->
     <fragment
         android:id="@+id/loginFragment"

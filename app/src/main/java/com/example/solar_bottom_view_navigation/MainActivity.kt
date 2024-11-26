@@ -1,81 +1,40 @@
 package com.example.solar_bottom_view_navigation
 
-import android.content.Intent
-
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-//Firebase firestore
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import com.example.solar_bottom_view_navigation.ui.login.LoginFragment
-import com.google.firebase.firestore.FirebaseFirestore
-//Login fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        // Load LoginFragment if this is the first time launching
-        if (savedInstanceState == null) {
-            loadFragment(LoginFragment())
-        }
-        // Function to replace the current fragment
-        /*
-        val usernameInput = findViewById<EditText>(R.id.usernameInput)
-        val passwordInput = findViewById<EditText>(R.id.passwordInput)
-        val loginButton = findViewById<Button>(R.id.loginButton)
-        loginButton.setOnClickListener {
-            val username = usernameInput.text.toString()
-            val password = passwordInput.text.toString()
 
-            if (username == "admin" && password == "password") {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            } else {
-                Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show()
-            }
-        }
-        // Initialize Firestore
-        val db = FirebaseFirestore.getInstance()
+        // Find the BottomNavigationView and NavHostFragment
+        val navView: BottomNavigationView = findViewById(R.id.nav_view)
 
-        // Reference to the 'user1' document in the 'users' collection
-        val userRef = db.collection("test").document("test")
+        // Find the NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController: NavController = navHostFragment.navController
 
-        // Retrieve the document
-        userRef.get()
-            .addOnSuccessListener { document ->
-                if (document != null && document.exists()) {
-                    // Convert document to a User object (this assumes an appropriate data class)
-                    val user = document.toObject(User::class.java)
-                    Log.d("MainActivity", "User name: ${user?.battery}, age: ${user?.panel}")
-                    val batteryString = user?.battery.toString()
-                    val panelString = user?.panel.toString()
-                    val textView: TextView = findViewById(R.id.textBatteryVoltage) as TextView
-                        textView.text = batteryString
-                    val textView1: TextView = findViewById(R.id.textPanelVoltage) as TextView
-                        textView1.text = panelString
-                } else {
-                    Log.d("MainActivity", "No such document")
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.d("MainActivity", "get failed with ", exception)
-            }
-    }
-*/
-    }
-    private fun loadFragment(fragment: LoginFragment) {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .commit()
+        // Define the top-level destinations for AppBar
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home,
+                R.id.navigation_dashboard,
+                R.id.navigation_notifications
+            )
+        )
+
+        // Setup ActionBar with NavController
+        setupActionBarWithNavController(navController, appBarConfiguration)
+
+        // Setup BottomNavigationView with NavController
+        navView.setupWithNavController(navController)
     }
 }
-
-data class User(
-    var battery: Int? = null,
-    var panel: Int? = null
-)

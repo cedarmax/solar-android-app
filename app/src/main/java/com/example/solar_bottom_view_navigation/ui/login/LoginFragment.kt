@@ -10,7 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.example.solar_bottom_view_navigation.R
-import com.example.solar_bottom_view_navigation.ui.login.LoginViewModel
+import androidx.navigation.fragment.findNavController
+import android.widget.TextView
 
 class LoginFragment : Fragment() {
 
@@ -36,7 +37,15 @@ class LoginFragment : Fragment() {
         }
 
         observeViewModel()
+// Navigate to Sign-Up
+        view.findViewById<TextView>(R.id.signupTextView).setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_signupFragment)
+        }
 
+        // Navigate to Forgot Password
+        view.findViewById<TextView>(R.id.forgotPasswordTextView).setOnClickListener {
+            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
+        }
         return view
     }
 
