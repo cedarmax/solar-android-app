@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    android:background="@color/baby_blue"
-    tools:context=".SignUpActivity">
+    android:background="@color/baby_blue">
 
     <!-- Title -->
     <TextView
@@ -42,6 +39,30 @@
         android:textColorHint="@color/white"
         android:inputType="textPassword"
         android:layout_below="@id/emailEditText"
+        android:layout_marginTop="8dp"
+        android:paddingEnd="50dp" /> <!-- Added padding to prevent overlap -->
+
+    <!-- Password Visibility Toggle Button -->
+    <Button
+        android:id="@+id/passwordToggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🔒"
+    android:background="@android:color/transparent"
+    android:textSize="18sp"
+    android:layout_alignParentEnd="true"
+    android:layout_marginEnd="8dp"
+    android:layout_alignBaseline="@id/passwordEditText" />
+
+    <!-- Password Requirements -->
+    <TextView
+        android:id="@+id/passwordRequirementsTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Password must be at least 8 characters, contain a number and a special character."
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:layout_below="@id/passwordEditText"
         android:layout_marginTop="8dp" />
 
     <!-- Sign Up Button -->
@@ -50,9 +71,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Sign Up"
-        android:layout_below="@id/passwordEditText"
-        android:backgroundTint="@color/green_200"
-        android:layout_marginTop="16dp" />
+        android:layout_below="@id/passwordRequirementsTextView"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/green_200" />
 
     <!-- Already Have Account Text -->
     <TextView
