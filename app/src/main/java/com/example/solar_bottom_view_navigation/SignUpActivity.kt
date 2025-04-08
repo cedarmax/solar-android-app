@@ -5,7 +5,6 @@ import android.util.Patterns
 import android.widget.ImageButton
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.solar_bottom_view_navigation.ui.signup.SignUpViewModel
 import android.os.Bundle
 import android.text.InputType
 import android.widget.Button

@@ -56,7 +56,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     //androidTestImplementation(libs.androidx.test.espresso.idling.concurrent)
     // Import the Firebase BoM
-
+    implementation("com.google.android.material:material:1.3.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
 

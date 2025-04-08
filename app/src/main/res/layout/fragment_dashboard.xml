@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:padding="16dp"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="#000000">
 
     <!-- Light Bulb and Switch 1 Pair -->
     <LinearLayout
@@ -35,9 +36,9 @@
             android:contentDescription="Light switch 1"
             android:layout_marginTop="16dp" />
 
-        <!-- Textbox 1 -->
-        <TextView
-            android:id="@+id/textbox1"
+        <!-- Editable Textbox 1 -->
+        <EditText
+            android:id="@+id/editText1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -45,7 +46,9 @@
             android:textSize="16sp"
             android:textAlignment="center"
             android:gravity="center"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:background="@android:color/transparent"
+            android:inputType="text" />
     </LinearLayout>
 
     <!-- Light Bulb and Switch 2 Pair -->
@@ -77,9 +80,9 @@
             android:contentDescription="Light switch 2"
             android:src="@drawable/switch_off" />
 
-        <!-- Textbox 2 -->
-        <TextView
-            android:id="@+id/textbox2"
+        <!-- Editable Textbox 2 -->
+        <EditText
+            android:id="@+id/editText2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -87,7 +90,9 @@
             android:textSize="16sp"
             android:textAlignment="center"
             android:gravity="center"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            android:background="@android:color/transparent"
+            android:inputType="text" />
     </LinearLayout>
 
 </LinearLayout>

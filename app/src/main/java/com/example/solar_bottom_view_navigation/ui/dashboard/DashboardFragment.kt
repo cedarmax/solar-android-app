@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.solar_bottom_view_navigation.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -17,106 +18,92 @@ class DashboardFragment : Fragment() {
     private lateinit var switch2: ImageView
     private lateinit var lightBulb1: ImageView
     private lateinit var lightBulb2: ImageView
+    private lateinit var editText1: EditText
+    private lateinit var editText2: EditText
 
     private val auth = FirebaseAuth.getInstance()
     private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
 
-        // Initialize the switches and light bulb images
+        // Initialize UI elements
         switch1 = view.findViewById(R.id.switch1)
         switch2 = view.findViewById(R.id.switch2)
         lightBulb1 = view.findViewById(R.id.lightBulb1)
         lightBulb2 = view.findViewById(R.id.lightBulb2)
+        editText1 = view.findViewById(R.id.editText1)
+        editText2 = view.findViewById(R.id.editText2)
 
-        // Load initial states of switches from Firestore
-        loadSwitchStates()
+        // Listen for real-time changes from Firebase
+        observeSwitchStates()
+        observeLabels()
 
-        // Set up switch 1 listener
-        switch1.setOnClickListener {
-            val isOn = switch1.drawable.constantState == resources.getDrawable(R.drawable.switch_off).constantState
-            toggleSwitch(1, isOn)
-        }
+        // Set up switch click listeners
+        switch1.setOnClickListener { toggleSwitch(1) }
+        switch2.setOnClickListener { toggleSwitch(2) }
 
-        // Set up switch 2 listener
-        switch2.setOnClickListener {
-            val isOn = switch2.drawable.constantState == resources.getDrawable(R.drawable.switch_off).constantState
-            toggleSwitch(2, isOn)
-        }
+        // Save labels to Firebase when focus is lost
+        editText1.setOnFocusChangeListener { _, hasFocus -> if (!hasFocus) saveLabel(1) }
+        editText2.setOnFocusChangeListener { _, hasFocus -> if (!hasFocus) saveLabel(2) }
 
         return view
     }
 
-    private fun toggleSwitch(switchNumber: Int, turnOn: Boolean) {
-        val userId = auth.currentUser?.uid
-        if (userId == null) {
-            Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
-            return
-        }
-
+    private fun toggleSwitch(switchNumber: Int) {
+        val userId = auth.currentUser?.uid ?: return
         val userRef = db.collection("users").document(userId)
-        val switchStateField = "switch$switchNumber"
+        val switchField = "switch$switchNumber"
 
-        // Update UI based on switch state
-        if (switchNumber == 1) {
-            switch1.setImageResource(if (turnOn) R.drawable.switch_on else R.drawable.switch_off)
-            lightBulb1.setImageResource(if (turnOn) R.drawable.bulb_on else R.drawable.bulb_off)
-        } else if (switchNumber == 2) {
-            switch2.setImageResource(if (turnOn) R.drawable.switch_on else R.drawable.switch_off)
-            lightBulb2.setImageResource(if (turnOn) R.drawable.bulb_on else R.drawable.bulb_off)
+        userRef.get().addOnSuccessListener { document ->
+            if (document.exists()) {
+                val currentState = document.getBoolean(switchField) ?: false
+                userRef.update(switchField, !currentState)
+            }
         }
-
-        // Update Firestore with the new switch state
-        userRef.update(switchStateField, turnOn)
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Switch $switchNumber updated", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "Error updating switch $switchNumber: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
     }
 
-    private fun loadSwitchStates() {
-        val userId = auth.currentUser?.uid
-        if (userId == null) {
-            Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
-            return
-        }
-
+    private fun saveLabel(labelNumber: Int) {
+        val userId = auth.currentUser?.uid ?: return
         val userRef = db.collection("users").document(userId)
+        val labelField = "label$labelNumber"
+        val newText = if (labelNumber == 1) editText1.text.toString() else editText2.text.toString()
 
-        userRef.get()
-            .addOnSuccessListener { document ->
-                if (document.exists()) {
-                    val switch1State = document.getBoolean("switch1") ?: false
-                    val switch2State = document.getBoolean("switch2") ?: false
-
-                    // Set the initial state of switch 1 and light bulb 1
-                    switch1.setImageResource(if (switch1State) R.drawable.switch_on else R.drawable.switch_off)
-                    lightBulb1.setImageResource(if (switch1State) R.drawable.bulb_on else R.drawable.bulb_off)
-
-                    // Set the initial state of switch 2 and light bulb 2
-                    switch2.setImageResource(if (switch2State) R.drawable.switch_on else R.drawable.switch_off)
-                    lightBulb2.setImageResource(if (switch2State) R.drawable.bulb_on else R.drawable.bulb_off)
-                } else {
-                    // Document does not exist, initialize with default values
-                    val initialData = mapOf("switch1" to false, "switch2" to false)
-                    userRef.set(initialData)
-                }
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "Error loading switch states: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+        userRef.update(labelField, newText).addOnFailureListener {
+            Toast.makeText(requireContext(), "Failed to update label", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    private fun observeSwitchStates() {
+        val userId = auth.currentUser?.uid ?: return
+        val userRef = db.collection("users").document(userId)
+
+        userRef.addSnapshotListener { document, _ ->
+            if (document != null && document.exists()) {
+                val switch1State = document.getBoolean("switch1") ?: false
+                val switch2State = document.getBoolean("switch2") ?: false
+
+                switch1.setImageResource(if (switch1State) R.drawable.switch_on else R.drawable.switch_off)
+                lightBulb1.setImageResource(if (switch1State) R.drawable.bulb_on else R.drawable.bulb_off)
+
+                switch2.setImageResource(if (switch2State) R.drawable.switch_on else R.drawable.switch_off)
+                lightBulb2.setImageResource(if (switch2State) R.drawable.bulb_on else R.drawable.bulb_off)
+            }
+        }
+    }
+
+    private fun observeLabels() {
+        val userId = auth.currentUser?.uid ?: return
+        val userRef = db.collection("users").document(userId)
+
+        userRef.addSnapshotListener { document, _ ->
+            if (document != null && document.exists()) {
+                editText1.setText(document.getString("label1") ?: "Switch 1")
+                editText2.setText(document.getString("label2") ?: "Switch 2")
+            }
+        }
     }
 }

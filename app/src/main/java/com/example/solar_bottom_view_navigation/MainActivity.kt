@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         // Setup ActionBar with NavController
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        //setupActionBarWithNavController(navController, appBarConfiguration)
 
         // Setup BottomNavigationView with NavController
         navView.setupWithNavController(navController)

@@ -122,9 +122,6 @@ class NotificationsFragment : Fragment() {
         solarWattage: Float,
         batteryWattage: Float
     ) {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
-        val formattedTime = dateFormat.format(Date(timestamp))
-
         // Get the current user’s UID
         val userId = auth.currentUser?.uid
         if (userId == null) {
@@ -137,14 +134,14 @@ class NotificationsFragment : Fragment() {
             .child("users")
             .child(userId)
             .child("powerStatistics")
-            .child(formattedTime)
+            .child(timestamp.toString()) // Use timestamp as key
 
         // Data object
         val data = mapOf(
             "batteryPercentage" to batteryPercentage,
             "solarWattage" to solarWattage,
             "batteryWattage" to batteryWattage,
-            "time" to formattedTime
+            "time" to timestamp // Store the actual timestamp
         )
 
         // Push data to Firebase
