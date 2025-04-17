@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:gravity="center"
-    android:background="@android:color/white"> <!-- White background for visibility -->
+    android:background="@color/baby_blue"> <!-- White background for visibility -->
 
     <!-- TextView for user greeting -->
     <TextView
@@ -15,6 +15,17 @@
         android:layout_height="wrap_content"
         android:text="Welcome, User!"
         android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"/>
+
+    <!-- New TextView below tvUserName -->
+    <TextView
+        android:id="@+id/tvUserStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Here's your Battery Health information:"
+        android:textSize="16sp"
         android:textColor="@android:color/black"
         android:layout_marginBottom="10dp"
         android:gravity="center"/>
@@ -87,5 +98,17 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/lineChart"
         android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+        android:layout_height="300dp"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- Log Out Button -->
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log Out"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp"
+        android:layout_gravity="left" />
 </LinearLayout>

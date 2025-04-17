@@ -1,63 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/schedule_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="24dp"
+    android:orientation="vertical">
 
-    <!-- Battery Percentage Chart -->
     <TextView
+        android:text="Select Switch"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Battery Percentage (%)"
-        android:textSize="14sp"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center" />
+        android:layout_height="wrap_content" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/batteryPercentageChart"
+    <Spinner
+        android:id="@+id/switchSpinner"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_gravity="center" />
+        android:layout_height="wrap_content" />
 
-    <!-- Solar Panel Wattage Chart -->
     <TextView
+        android:text="Turn On?"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Solar Panel Wattage (W)"
-        android:textSize="14sp"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center"
-        android:paddingTop="16dp" />
+        android:layout_height="wrap_content" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/solarCurrentChart"
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/switchState"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/dateButton"
+        android:text="Pick Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/timeButton"
+        android:text="Pick Time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/dateTimePreview"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_gravity="center" />
-
-    <!-- Battery Wattage Chart -->
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Battery Wattage (W)"
-        android:textSize="14sp"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center"
-        android:paddingTop="16dp" />
+        android:paddingTop="8dp"
+        android:text="Scheduled: not set" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/batteryWattageChart"
+    <Button
+        android:id="@+id/saveButton"
+        android:text="Save Schedule"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_gravity="center" />
-
-    <!-- X-axis Label -->
-    <TextView
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Time (s)"
-        android:textSize="14sp"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center"
-        android:paddingTop="8dp" />
+        android:layout_marginTop="24dp" />
 </LinearLayout>
