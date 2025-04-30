@@ -1,40 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/schedule_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/baby_blue">
 
     <TextView
         android:text="Select Switch"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp" />
 
     <Spinner
         android:id="@+id/switchSpinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="56dp"
+        android:padding="12dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/spinner_background" />
 
-    <TextView
-        android:text="Turn On?"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp">
 
-    <androidx.appcompat.widget.SwitchCompat
-        android:id="@+id/switchState"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/textViewLeft"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Schedule turning off the light"
+            android:maxLines="3"
+            android:ellipsize="none"
+            android:textAlignment="textEnd"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/switchState"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="8dp"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/textViewLeft"
+            app:layout_constraintEnd_toStartOf="@id/textViewRight"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"/>
+
+        <TextView
+            android:id="@+id/textViewRight"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Schedule turning on the light"
+            android:maxLines="3"
+            android:ellipsize="none"
+            android:textAlignment="textStart"
+            app:layout_constraintStart_toEndOf="@id/switchState"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <Button
         android:id="@+id/dateButton"
         android:text="Pick Date"
+        android:backgroundTint="@color/green_200"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <Button
         android:id="@+id/timeButton"
         android:text="Pick Time"
+        android:backgroundTint="@color/green_200"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
@@ -48,7 +93,28 @@
     <Button
         android:id="@+id/saveButton"
         android:text="Save Schedule"
+        android:backgroundTint="@color/green_200"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp" />
+
+    <!-- Add below your Save Schedule button -->
+    <TextView
+        android:id="@+id/scheduleListTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scheduled Toggles:"
+        android:layout_marginTop="32dp"
+        android:textStyle="bold"
+        android:textSize="16sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/scheduleRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingTop="8dp"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:paddingBottom="8dp" />
 </LinearLayout>

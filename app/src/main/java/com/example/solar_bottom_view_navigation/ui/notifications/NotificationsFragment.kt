@@ -9,7 +9,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.solar_bottom_view_navigation.R
+import com.example.solar_bottom_view_navigation.databinding.FragmentNotificationsBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,6 +27,8 @@ class NotificationsFragment : Fragment() {
     private lateinit var dateTimePreview: TextView
     private lateinit var saveButton: Button
 
+    private var _binding: FragmentNotificationsBinding? = null
+    private val binding get() = _binding!!
     private var selectedDateTime: Calendar? = null
     private val db = FirebaseFirestore.getInstance()
 
@@ -31,7 +36,9 @@ class NotificationsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val view = inflater.inflate(R.layout.fragment_notifications, container, false)
+        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        val view = binding.root
+
 
         switchSpinner = view.findViewById(R.id.switchSpinner)
         switchState = view.findViewById(R.id.switchState)
@@ -43,15 +50,41 @@ class NotificationsFragment : Fragment() {
         setupSpinner()
         setupButtons()
 
+        val recyclerView = view.findViewById<RecyclerView>(R.id.scheduleRecyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        loadSchedules(recyclerView)
+
         return view
     }
 
     private fun setupSpinner() {
-        val switches = listOf("Switch 1", "Switch 2")
-        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, switches)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        switchSpinner.adapter = adapter
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val userDocRef = FirebaseFirestore.getInstance().collection("users").document(userId)
+
+        userDocRef.get().addOnSuccessListener { document ->
+            if (document != null && document.exists()) {
+                val label1 = document.getString("label1") ?: "Switch 1"
+                val label2 = document.getString("label2") ?: "Switch 2"
+
+                val switchMap = mapOf(
+                    label1 to "switch1",
+                    label2 to "switch2"
+                )
+
+                val labels = switchMap.keys.toList()
+                val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, labels)
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.switchSpinner.adapter = adapter
+
+                // Optional: save the mapping if needed elsewhere
+                binding.switchSpinner.tag = switchMap
+            }
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "Failed to load switch labels", Toast.LENGTH_SHORT).show()
+        }
     }
+
 
     private fun setupButtons() {
         dateButton.setOnClickListener {
@@ -75,6 +108,7 @@ class NotificationsFragment : Fragment() {
 
         saveButton.setOnClickListener {
             saveSchedule()
+
         }
     }
 
@@ -86,13 +120,27 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun saveSchedule() {
+        val selectedLabel = binding.switchSpinner.selectedItem as String
+        val switchMap = binding.switchSpinner.tag as? Map<String, String>
+        val selectedSwitchKey = switchMap?.get(selectedLabel) ?: "switch1"
+
+        val switchIndex = when (selectedSwitchKey) {
+            "switch1" -> 1
+            "switch2" -> 2
+            else -> 1
+        }
+
         val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
-        val switchName = switchSpinner.selectedItem.toString()
         val isOn = switchState.isChecked
-        val timestamp = selectedDateTime?.timeInMillis?.let { Timestamp(Date(it)) } ?: return
+        val timestamp = selectedDateTime?.timeInMillis?.let { Timestamp(Date(it)) }
+
+        if (timestamp == null) {
+            Toast.makeText(requireContext(), "Please select a date and time", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         val scheduleData = hashMapOf(
-            "switch" to switchName,
+            "switch" to switchIndex,
             "turnOn" to isOn,
             "time" to timestamp
         )
@@ -103,9 +151,100 @@ class NotificationsFragment : Fragment() {
             .add(scheduleData)
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Schedule saved", Toast.LENGTH_SHORT).show()
+                loadSchedules(requireView().findViewById(R.id.scheduleRecyclerView))
+
+                // 🔁 Only reset on success
+                binding.switchSpinner.setSelection(0)
+                binding.switchState.isChecked = false
+                selectedDateTime = null
+                binding.dateTimePreview.text = "Scheduled: not set" // safe to clear now
             }
-            .addOnFailureListener {
-                Toast.makeText(requireContext(), "Failed to save schedule", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(requireContext(), "Failed to save schedule: ${e.message}", Toast.LENGTH_LONG).show()
             }
     }
+
+    sealed class ScheduleListItem {
+        data class Header(val title: String) : ScheduleListItem()
+        data class Entry(
+            val switchKey: String,
+            val switchLabel: String,
+            val state: Boolean,
+            val timeMillis: Long,
+            val docId: String,
+            val isPast: Boolean // <-- new
+        ) : ScheduleListItem()
+
+
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+    fun loadSchedules(recyclerView: RecyclerView) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+        val userDocRef = db.collection("users").document(userId)
+        val schedulesRef = userDocRef.collection("schedules")
+
+        // First: get labels
+        userDocRef.get().addOnSuccessListener { userDoc ->
+            val label1 = userDoc.getString("label1") ?: "Switch 1"
+            val label2 = userDoc.getString("label2") ?: "Switch 2"
+
+            // Then: load schedules
+            schedulesRef.get().addOnSuccessListener { snapshot ->
+                val now = System.currentTimeMillis()
+                val past = mutableListOf<ScheduleListItem.Entry>()
+                val future = mutableListOf<ScheduleListItem.Entry>()
+
+                for (doc in snapshot.documents) {
+                    val switchIndex = doc.getLong("switch")?.toInt() ?: continue
+                    val turnOn = doc.getBoolean("turnOn") ?: false
+                    val time = doc.getTimestamp("time")?.toDate()?.time ?: continue
+
+                    val switchKey = "switch$switchIndex"
+                    val label = when (switchIndex) {
+                        1 -> label1
+                        2 -> label2
+                        else -> "Switch $switchIndex"
+                    }
+
+                    val isPast = time < now
+                    val entry = ScheduleListItem.Entry(
+                        switchKey = switchKey,
+                        switchLabel = label,
+                        state = turnOn,
+                        timeMillis = time,
+                        docId = doc.id,
+                        isPast = isPast // <-- new
+                    )
+
+
+
+                    if (time < now) past.add(entry) else future.add(entry)
+                }
+
+                val finalList = mutableListOf<ScheduleListItem>()
+                if (future.isNotEmpty()) {
+                    finalList.add(ScheduleListItem.Header("Upcoming"))
+                    finalList.addAll(future.sortedBy { it.timeMillis })
+                }
+                if (past.isNotEmpty()) {
+                    finalList.add(ScheduleListItem.Header("Past"))
+                    finalList.addAll(past.sortedByDescending { it.timeMillis })
+                }
+
+                recyclerView.adapter = ScheduleAdapter(finalList) {
+                    loadSchedules(recyclerView)
+                }
+
+            }
+        }
+    }
+
+
+
+
+
 }

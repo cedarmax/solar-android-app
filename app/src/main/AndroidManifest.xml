@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.solar_bottom_view_navigation">
+
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
     <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
         android:allowBackup="true"
@@ -18,9 +24,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:targetApi="31">
+
+        <!-- Schedule Service -->
+        <service
+            android:name=".ScheduleService"
+            android:foregroundServiceType="dataSync" />
+
         <meta-data
             android:name="com.google.android.gms.client_id"
             android:value="solar-control-app.apps.googleusercontent.com" />
+
+        <!-- Activities -->
         <activity
             android:name=".LoginActivity"
             android:exported="true"
@@ -33,9 +47,6 @@
         <activity android:name=".SignUpActivity" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".MainActivity" />
-
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

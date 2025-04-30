@@ -1,6 +1,7 @@
 package com.example.solar_bottom_view_navigation
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
@@ -10,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.example.solar_bottom_view_navigation.ui.login.LoginViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 class LoginActivity : AppCompatActivity() {
 
@@ -30,6 +32,16 @@ class LoginActivity : AppCompatActivity() {
             val email = emailEditText.text.toString().trim()
             val password = passwordEditText.text.toString().trim()
             loginViewModel.login(email, password)
+        }
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        if (currentUser != null) {
+            val serviceIntent = Intent(this, ScheduleService::class.java)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(serviceIntent)
+            } else {
+                startService(serviceIntent)
+            }
         }
 
         observeViewModel()
@@ -63,6 +75,8 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
+
+
 
     private fun navigateToMainActivity() {
         val intent = Intent(this, MainActivity::class.java)

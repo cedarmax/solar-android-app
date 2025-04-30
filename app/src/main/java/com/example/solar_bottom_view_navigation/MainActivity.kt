@@ -1,5 +1,7 @@
 package com.example.solar_bottom_view_navigation
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -8,6 +10,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,5 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         // Setup BottomNavigationView with NavController
         navView.setupWithNavController(navController)
+
+
     }
 }

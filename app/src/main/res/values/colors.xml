@@ -8,6 +8,8 @@
     <color name="green_200">#FF4CAF50</color>
     <color name="black">#FF000000</color>
     <color name="baby_blue">#FF87CEEB</color>"
+    <color name="baby_blue_dark">#87C1DA</color>
+    <color name="outline_color">#5A9FCF</color> <!-- darker blue-gray, or anything that pops -->
     <color name="blue">#FF2196F3</color>"
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#FF808080</color>

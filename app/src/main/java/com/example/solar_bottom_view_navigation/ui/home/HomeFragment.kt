@@ -19,6 +19,7 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.firestore.FirebaseFirestore
@@ -123,6 +124,12 @@ class HomeFragment : Fragment() {
             //lineChart.xAxis.valueFormatter = TimestampAxisFormatter()
             setNoDataText("No data for selected period")
             setNoDataTextColor(Color.GRAY)
+            lineChart.axisLeft.valueFormatter = object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return "$value Watts" // Change W to the correct unit if needed
+                }
+            }
+
         }
     }
 
@@ -138,7 +145,8 @@ class HomeFragment : Fragment() {
         }
 
         // Important: set value formatter here with updated cutoff
-        lineChart.xAxis.valueFormatter = TimestampAxisFormatter(cutoff)
+        lineChart.xAxis.valueFormatter = TimestampAxisFormatter(cutoff, timePeriod)
+
 
         dataRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -189,7 +197,7 @@ class HomeFragment : Fragment() {
             return
         }
 
-        val dataSet = LineDataSet(entries, "Power").apply {
+        val dataSet = LineDataSet(entries, "Power Usage").apply {
             color = Color.BLUE
             valueTextColor = Color.BLACK
             lineWidth = 2f
@@ -209,8 +217,8 @@ class HomeFragment : Fragment() {
         batteryPercentageTextView.text = "$percentageFormatted%"
 
         val batteryIconRes = when {
-            batteryPercentage >= 50 -> android.R.drawable.ic_lock_idle_charging
-            else -> android.R.drawable.ic_dialog_alert
+            batteryPercentage >= 50 -> R.drawable.battery_full
+            else -> R.drawable.battery_empty
         }
 
         batteryIcon.setImageResource(batteryIconRes)
@@ -238,6 +246,5 @@ class HomeFragment : Fragment() {
                 Log.e("Firestore", "Error updating current user", e)
             }
     }
-
 
 }

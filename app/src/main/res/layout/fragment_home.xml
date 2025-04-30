@@ -24,7 +24,7 @@
         android:id="@+id/tvUserStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Here's your Battery Health information:"
+        android:text="Here's your Battery Status:"
         android:textSize="16sp"
         android:textColor="@android:color/black"
         android:layout_marginBottom="10dp"
@@ -55,7 +55,20 @@
             android:text="100%"
             android:textSize="16sp"
             android:textColor="@android:color/black"/>
+
     </LinearLayout>
+
+    <!-- New TextView above the Radio Buttons -->
+    <TextView
+        android:id="@+id/tvSelectTimePeriod"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Time Period for Power Usage data:"
+        android:textSize="16sp"
+        android:textColor="@android:color/black"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"/>
+
 
     <!-- Radio Group for Time Period Selection -->
     <LinearLayout
@@ -107,7 +120,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Log Out"
-        android:backgroundTint="@color/purple_500"
+        android:backgroundTint="@color/green_200"
         android:textColor="@android:color/white"
         android:layout_marginTop="8dp"
         android:layout_gravity="left" />
